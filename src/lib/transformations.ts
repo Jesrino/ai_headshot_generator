@@ -1,24 +1,28 @@
 import type { CloudinaryImage } from "@cloudinary/url-gen/index";
 import { cld } from "../cloudinary/config";
 import { fill } from "@cloudinary/url-gen/actions/resize";
+import { sharpen } from "@cloudinary/url-gen/actions/adjust";
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import { format, quality } from "@cloudinary/url-gen/actions/delivery";
-import { auto as autoQuality } from "@cloudinary/url-gen/qualifiers/quality";
+import { autoBest } from "@cloudinary/url-gen/qualifiers/quality";
 import { auto } from "@cloudinary/url-gen/qualifiers/format";
 import type { ExportFormat, HeadshotPreset } from "../types";
 import {
   generativeBackgroundReplace,
   generativeReplace,
+  upscale,
 } from "@cloudinary/url-gen/actions/effect";
 
-const WIDTH = 600;
-const HEIGHT = 750;
+const WIDTH = 2160;
+const HEIGHT = 2700;
 
 function finalizeImage(img: CloudinaryImage) {
   return img
+    .effect(upscale())
+    .adjust(sharpen(40))
     .resize(fill().width(WIDTH).height(HEIGHT).gravity(autoGravity()))
     .delivery(format(auto()))
-    .delivery(quality(autoQuality()));
+    .delivery(quality(autoBest()));
 }
 
 export const HEADSHOT_PRESETS: HeadshotPreset[] = [
@@ -45,7 +49,7 @@ export const HEADSHOT_PRESETS: HeadshotPreset[] = [
           ),
       ),
     transformationChain:
-      "e_gen_replace:from_casual%20shirt;to_professional%20navy%20suit%20jacket%20with%20white%20dress%20shirt%20and%20tie/e_gen_background_replace:prompt_modern%20corporate%20office%20with%20bookshelves%20professional%20lighting/c_fill,w_600,h_750,g_auto/f_auto/q_auto",
+      "e_gen_replace:from_casual%20shirt;to_professional%20navy%20suit%20jacket%20with%20white%20dress%20shirt%20and%20tie/e_gen_background_replace:prompt_modern%20corporate%20office%20with%20bookshelves%20professional%20lighting/e_upscale/a_sharpen:40/c_fill,w_2160,h_2700,g_auto/f_auto/q_auto:best",
   },
   {
     id: "outdoor-professional",
@@ -53,7 +57,7 @@ export const HEADSHOT_PRESETS: HeadshotPreset[] = [
     description: "Crisp white shirt with golden hour garden",
     category: "style",
     transformationChain:
-      "e_gen_replace:from_casual%20shirt;to_crisp%20white%20button%20down%20dress%20shirt%20professional/e_gen_background_replace:prompt_outdoor%20garden%20with%20trees%20golden%20hour%20sunlight%20bokeh/c_fill,w_600,h_750,g_auto/f_auto/q_auto",
+      "e_gen_replace:from_casual%20shirt;to_crisp%20white%20button%20down%20dress%20shirt%20professional/e_gen_background_replace:prompt_outdoor%20garden%20with%20trees%20golden%20hour%20sunlight%20bokeh/e_upscale/a_sharpen:40/c_fill,w_2160,h_2700,g_auto/f_auto/q_auto:best",
     build: (publicId) =>
       finalizeImage(
         cld
@@ -76,7 +80,7 @@ export const HEADSHOT_PRESETS: HeadshotPreset[] = [
     description: "Smart blazer with city street bokeh",
     category: "style",
     transformationChain:
-      "e_gen_replace:from_casual%20shirt;to_charcoal%20gray%20blazer%20over%20light%20blue%20dress%20shirt/e_gen_background_replace:prompt_city%20street%20with%20buildings%20urban%20bokeh/c_fill,w_600,h_750,g_auto/f_auto/q_auto",
+      "e_gen_replace:from_casual%20shirt;to_charcoal%20gray%20blazer%20over%20light%20blue%20dress%20shirt/e_gen_background_replace:prompt_city%20street%20with%20buildings%20urban%20bokeh/e_upscale/a_sharpen:40/c_fill,w_2160,h_2700,g_auto/f_auto/q_auto:best",
     build: (publicId) =>
       finalizeImage(
         cld
@@ -99,7 +103,7 @@ export const HEADSHOT_PRESETS: HeadshotPreset[] = [
     description: "Minimal black knit with a sculptural studio backdrop",
     category: "style",
     transformationChain:
-      "e_gen_replace:from_casual%20shirt;to_black%20textured%20crewneck%20sweater%20minimal%20editorial/e_gen_background_replace:prompt_monochrome%20editorial%20studio%20with%20soft%20architectural%20shadows/c_fill,w_600,h_750,g_auto/f_auto/q_auto",
+      "e_gen_replace:from_casual%20shirt;to_black%20textured%20crewneck%20sweater%20minimal%20editorial/e_gen_background_replace:prompt_monochrome%20editorial%20studio%20with%20soft%20architectural%20shadows/e_upscale/a_sharpen:40/c_fill,w_2160,h_2700,g_auto/f_auto/q_auto:best",
     build: (publicId) =>
       finalizeImage(
         cld
@@ -122,7 +126,7 @@ export const HEADSHOT_PRESETS: HeadshotPreset[] = [
     description: "Layered neutral tailoring with warm gallery light",
     category: "style",
     transformationChain:
-      "e_gen_replace:from_casual%20shirt;to_layered%20cream%20shirt%20and%20olive%20overshirt%20creative%20director%20style/e_gen_background_replace:prompt_contemporary%20art%20gallery%20with%20warm%20directional%20light/c_fill,w_600,h_750,g_auto/f_auto/q_auto",
+      "e_gen_replace:from_casual%20shirt;to_layered%20cream%20shirt%20and%20olive%20overshirt%20creative%20director%20style/e_gen_background_replace:prompt_contemporary%20art%20gallery%20with%20warm%20directional%20light/e_upscale/a_sharpen:40/c_fill,w_2160,h_2700,g_auto/f_auto/q_auto:best",
     build: (publicId) =>
       finalizeImage(
         cld
@@ -146,9 +150,11 @@ export const ALL_PRESETS = HEADSHOT_PRESETS;
 export function buildOriginalPreview(publicId: string): CloudinaryImage {
   return cld
     .image(publicId)
+    .effect(upscale())
+    .adjust(sharpen(40))
     .resize(fill().width(WIDTH).height(HEIGHT).gravity(autoGravity()))
     .delivery(format(auto()))
-    .delivery(quality(autoQuality()));
+    .delivery(quality(autoBest()));
 }
 
 export function getPresetById(id: string): HeadshotPreset | undefined {
