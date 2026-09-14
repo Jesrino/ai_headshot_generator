@@ -1,4 +1,4 @@
-import { AlertCircle, ImageIcon } from "lucide-react";
+import { AlertCircle, FileImage, FileType2, ImageIcon, ShieldCheck } from "lucide-react";
 import type { UploadStatus } from "../types";
 import { useDropzone } from "react-dropzone";
 import { cn } from "../lib/utils";
@@ -62,7 +62,7 @@ export default function UploadCard({
 
   return (
     <section id="upload" className="px-4 py-12">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-4xl">
         <h2 className="mb-2 text-center text-2xl font-semibold">
           Upload Your Selfie
         </h2>
@@ -73,8 +73,8 @@ export default function UploadCard({
         <div
           {...getRootProps()}
           className={cn(
-            "glass-card relative flex cursor-pointer flex-col items-center gap-6 border-dashed p-10 transition hover:border-cyan-300/40 hover:bg-white/[0.08]",
-            isDragActive && "border-indigo-500/50 bg-indigo-500/10",
+            "glass-card relative flex cursor-pointer flex-col items-center gap-6 border-dashed p-10 transition duration-300 hover:scale-[1.02] hover:border-cyan-500/50 hover:bg-white/[0.08] md:p-14",
+            isDragActive && "border-cyan-300/70 bg-cyan-300/10",
             isUploading && "pointer-events-none opacity-80",
           )}
         >
@@ -85,9 +85,16 @@ export default function UploadCard({
 
           <div className="text-center">
             <p className="text-lg font-medium">Drag & drop your selfie</p>
-            <p className="mt-1 text-sm text-white/50">
-              or click to browse · JPG, PNG, or WEBP
+            <p className="mt-1 text-sm text-slate-200">
+              or click to browse
             </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-200">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5"><FileImage className="h-3.5 w-3.5 text-cyan-200" /> JPG</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5"><FileType2 className="h-3.5 w-3.5 text-cyan-200" /> PNG</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5"><FileImage className="h-3.5 w-3.5 text-cyan-200" /> WEBP</span>
+            <span className="text-white/45">up to 25MB</span>
           </div>
 
           {isUploading && (
@@ -112,8 +119,8 @@ export default function UploadCard({
               onUploadError={onUploadError}
               buttonText="Browse files"
               className={cn(
-                "inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white",
-                "transition hover:bg-indigo-500 disabled:cursor-wait disabled:opacity-70",
+                "inline-flex items-center gap-2 rounded-xl bg-cyan-300 px-6 py-3 font-medium text-slate-950 shadow-[0_0_24px_rgba(0,240,255,0.18)]",
+                "transition hover:bg-cyan-200 disabled:cursor-wait disabled:opacity-70",
               )}
             />
           </div>
@@ -124,6 +131,7 @@ export default function UploadCard({
               {uploadError}
             </div>
           )}
+          <div className="flex items-center gap-2 text-xs text-white/45"><ShieldCheck className="h-3.5 w-3.5 text-emerald-300" /> Private upload · no account required</div>
         </div>
       </div>
     </section>

@@ -11,12 +11,16 @@ export default function Home() {
   const headshot = useHeadshot();
   return (
     <div className="min-h-screen overflow-hidden">
-      <header className="border-b border-white/10 px-4 py-5">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/55 px-4 py-4 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <a href="#top" className="text-lg font-semibold tracking-tight">
             AI <span className="text-cyan-200">Headshot</span>
           </a>
-          <div className="hidden items-center gap-2 text-xs uppercase tracking-[0.18em] text-white/40 sm:flex">
+          <nav className="hidden items-center gap-6 text-sm text-slate-200 md:flex">
+            <a href="#upload" className="transition hover:text-cyan-200">Create</a>
+            <a href="#styles" className="transition hover:text-cyan-200">Styles</a>
+          </nav>
+          <div className="flex items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] text-emerald-100">
             <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.9)]" />
             Studio online
           </div>
@@ -63,6 +67,7 @@ export default function Home() {
 
       {headshot.hasUpload && (
         <TransformationGrid
+          id="styles"
           title="AI Headshot Styles"
           presets={headshot.presetImages}
           selectedPresetId={headshot.selectedPresetId}

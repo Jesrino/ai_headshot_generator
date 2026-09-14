@@ -10,6 +10,7 @@ interface PresetImage {
 }
 
 interface TransformationGridProps {
+  id?: string;
   title: string;
   presets: PresetImage[];
   selectedPresetId: string | null;
@@ -61,6 +62,7 @@ function PresetCard({
 }
 
 export default function TransformationGrid({
+  id,
   title,
   presets,
   onSelect,
@@ -69,7 +71,7 @@ export default function TransformationGrid({
   if (presets.length === 0) return null;
 
   return (
-    <section className="px-4 py-12">
+    <section id={id} className="px-4 py-12">
       <div className="mx-auto max-w-6xl">
         <h2 className="mb-2 text-center text-2xl font-semibold">{title}</h2>
         <p className="mb-8 text-center text-sm text-white/50">

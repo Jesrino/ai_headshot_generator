@@ -97,7 +97,7 @@ export default function ExportActions({
               className={cn(
                 "rounded-lg px-4 py-2 text-sm font-medium transition",
                 format === f.value
-                  ? "bg-indigo-600 text-white"
+                  ? "bg-cyan-300 text-slate-950"
                   : "bg-white/5 text-white/70 hover:bg-white/10",
               )}
             >
@@ -111,7 +111,7 @@ export default function ExportActions({
             type="button"
             onClick={handleDownload}
             disabled={loading}
-            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-xl bg-cyan-300 px-5 py-2.5 text-sm font-medium text-slate-950 shadow-[0_0_24px_rgba(0,240,255,0.16)] hover:bg-cyan-200 disabled:opacity-60"
           >
             {loading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
