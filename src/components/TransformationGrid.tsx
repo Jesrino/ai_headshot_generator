@@ -28,18 +28,18 @@ function PresetCard({
   onSelect: () => void;
 }) {
   return (
-    <button onClick={onSelect} type="button">
+    <button className="group text-left" onClick={onSelect} type="button">
       <div
         className={cn(
-          "relative aspect-[4/5] w-full overflow-hidden bg-black/30 border-1 rounded-xl",
-          isSelected ? "border-indigo-500" : "border-transparent",
+          "relative aspect-[4/5] w-full overflow-hidden rounded-xl border bg-black/30 transition duration-300 group-hover:-translate-y-1 group-hover:border-cyan-200/40",
+          isSelected ? "border-cyan-300 ring-2 ring-cyan-300/20" : "border-white/10",
         )}
       >
         <AdvancedImage
           cldImg={image}
           plugins={[placeholder({ mode: "blur" }), lazyload()]}
-          alt="Original Upload"
-          className="mx-auto rounded-xl shadow-lg"
+          alt={preset.name}
+          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
         />
 
         {isSelected && (
@@ -50,7 +50,10 @@ function PresetCard({
       </div>
 
       <div className="p-4">
-        <h4 className="font-semibold">{preset.name}</h4>
+        <div className="mb-1 flex items-center justify-between gap-3">
+          <h4 className="font-semibold">{preset.name}</h4>
+          <span className="text-[10px] uppercase tracking-[0.16em] text-cyan-200/70">AI edit</span>
+        </div>
         <p className="mt-1 text-xs text-white/50">{preset.description}</p>
       </div>
     </button>
@@ -75,9 +78,10 @@ export default function TransformationGrid({
         <p className="mb-6 text-center text-xs text-amber-400/70">
           Styles generate one at a time (~30–60s each).
         </p>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {presets.map(({ preset, image }) => (
             <PresetCard
+              key={preset.id}
               preset={preset}
               image={image}
               isSelected={selectedPresetId === preset.id}

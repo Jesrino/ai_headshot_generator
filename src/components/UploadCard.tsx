@@ -36,7 +36,7 @@ export default function UploadCard({
     try {
       const result = await uploadImageToCloudinary(file, setProgress);
       onUploadSuccess(result);
-    } catch (error) {
+    } catch {
       onUploadError(new Error("Upload failed."));
     }
   };
@@ -73,7 +73,7 @@ export default function UploadCard({
         <div
           {...getRootProps()}
           className={cn(
-            "glass-card relative flex cursor-pointer flex-col items-center gap-6 p-10 transition",
+            "glass-card relative flex cursor-pointer flex-col items-center gap-6 border-dashed p-10 transition hover:border-cyan-300/40 hover:bg-white/[0.08]",
             isDragActive && "border-indigo-500/50 bg-indigo-500/10",
             isUploading && "pointer-events-none opacity-80",
           )}
@@ -91,11 +91,14 @@ export default function UploadCard({
           </div>
 
           {isUploading && (
-            <div>
-              <div>
-                <div></div>
+            <div className="w-full max-w-xs text-center">
+              <div className="mb-2 h-1.5 overflow-hidden rounded-full bg-white/10">
+                <div
+                  className="h-full rounded-full bg-cyan-300 transition-all"
+                  style={{ width: `${Math.max(progress, 8)}%` }}
+                />
               </div>
-              <p>Uploading... {progress > 0 ? `${progress}%` : ""}</p>
+              <p className="text-sm text-white/60">Uploading... {progress > 0 ? `${progress}%` : ""}</p>
             </div>
           )}
 

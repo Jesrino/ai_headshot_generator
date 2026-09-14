@@ -93,6 +93,52 @@ export const HEADSHOT_PRESETS: HeadshotPreset[] = [
           ),
       ),
   },
+  {
+    id: "editorial-monochrome",
+    name: "Editorial Monochrome",
+    description: "Minimal black knit with a sculptural studio backdrop",
+    category: "style",
+    transformationChain:
+      "e_gen_replace:from_casual%20shirt;to_black%20textured%20crewneck%20sweater%20minimal%20editorial/e_gen_background_replace:prompt_monochrome%20editorial%20studio%20with%20soft%20architectural%20shadows/c_fill,w_600,h_750,g_auto/f_auto/q_auto",
+    build: (publicId) =>
+      finalizeImage(
+        cld
+          .image(publicId)
+          .effect(
+            generativeReplace()
+              .from("casual shirt")
+              .to("black textured crewneck sweater minimal editorial"),
+          )
+          .effect(
+            generativeBackgroundReplace().prompt(
+              "monochrome editorial studio with soft architectural shadows",
+            ),
+          ),
+      ),
+  },
+  {
+    id: "creative-director",
+    name: "Creative Director",
+    description: "Layered neutral tailoring with warm gallery light",
+    category: "style",
+    transformationChain:
+      "e_gen_replace:from_casual%20shirt;to_layered%20cream%20shirt%20and%20olive%20overshirt%20creative%20director%20style/e_gen_background_replace:prompt_contemporary%20art%20gallery%20with%20warm%20directional%20light/c_fill,w_600,h_750,g_auto/f_auto/q_auto",
+    build: (publicId) =>
+      finalizeImage(
+        cld
+          .image(publicId)
+          .effect(
+            generativeReplace()
+              .from("casual shirt")
+              .to("layered cream shirt and olive overshirt creative director style"),
+          )
+          .effect(
+            generativeBackgroundReplace().prompt(
+              "contemporary art gallery with warm directional light",
+            ),
+          ),
+      ),
+  },
 ];
 
 export const ALL_PRESETS = HEADSHOT_PRESETS;
@@ -116,7 +162,7 @@ export function getExportTransformationChain(
   const url = preset.build(publicId).toURL();
   const marker = "/image/upload/";
   const rest = url.split(marker)[1]?.split("?")[0] ?? "";
-  let path = rest.replace(/^v\d+\//, "");
+  const path = rest.replace(/^v\d+\//, "");
   const suffix = `/${publicId}`;
   if (path.endsWith(suffix)) {
     return path.slice(0, -suffix.length);
