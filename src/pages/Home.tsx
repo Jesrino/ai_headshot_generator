@@ -52,7 +52,7 @@ const steps = [
   },
   {
     number: "03",
-    title: "Download Your Portrait",
+    title: "Download 4K Portraits",
     description:
       "Preview your result and download the portrait when it feels right.",
     Icon: Download,
@@ -87,6 +87,11 @@ const gallery = [
 ];
 
 const faqs = [
+  {
+    question: "Are my photos encrypted?",
+    answer:
+      "Uploads use HTTPS encryption in transit. At-rest encryption and access controls depend on the configured Cloudinary account; this app does not set those policies itself.",
+  },
   {
     question: "Where are my photos stored?",
     answer:
