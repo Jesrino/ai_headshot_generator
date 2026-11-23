@@ -17,6 +17,7 @@
     "@cloudinary/url-gen": "^1.22.0",
     "@tailwindcss/vite": "^4.3.3",
     "clsx": "^2.1.1",
+    "framer-motion": "^14.14.0",
     "lucide-react": "^1.45.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
